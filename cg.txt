@@ -197,8 +197,6 @@ p = round(rySq - (rxSq * ry) + (0.25 * rxSq));
 px = 0;
 py = twoRxSq * y;
 
-7
-
 while (px < py) {
 x++;
 px += twoRySq;
@@ -245,7 +243,6 @@ printf("%d\t%d\t%d\n", x, xc - x, yc + y);
 }
 // Wait for a key press before closing the graphics window
 
-8
 
 getch();
 // Close graphics mode
