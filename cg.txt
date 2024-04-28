@@ -1,0 +1,266 @@
+
+############## DDA #######################
+#include <stdio.h>
+#include <graphics.h>
+void drawLineDDA(int x1, int y1, int x2, int y2)
+{
+int dx = x2 - x1;
+int dy = y2 - y1;
+int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+float xIncrement = dx / (float)steps;
+float yIncrement = dy / (float)steps;
+float x = x1, y = y1;
+for (int i = 0; i < steps; i++)
+{
+putpixel(x, y, WHITE);
+x += xIncrement;
+y += yIncrement;
+}
+}
+int main()
+{
+int gd = DETECT, gm;
+initgraph(&gd, &gm, NULL);
+int x1 = 100, y1 = 100, x2 = 400, y2 = 300;
+drawLineDDA(x1, y1, x2, y2);
+getch();
+closegraph();
+return 0;
+}
+
+############# BLA ##################
+#include <stdio.h>
+#include <graphics.h>
+void
+drawLineBresenham(int
+x1, int y1, int x2, int y2)
+{
+int dx = x2 - x1;
+int dy = y2 - y1;
+int increment_x = (dx >
+0) ? 1 : -1;
+int increment_y = (dy >
+0) ? 1 : -1;
+dx = abs(dx);
+dy = abs(dy);
+int p;
+if (dy <= dx)
+p = 2 * dy - dx;
+else
+p = 2 * dx - dy;
+int x = x1, y = y1;
+for (int i = 0; i <= dx;
+i++)
+{
+putpixel(x, y,
+WHITE);
+if (dy <= dx)
+{
+x += increment_x;
+if (p < 0)
+p += 2 * dy;
+
+else
+{
+y +=
+increment_y;
+p += 2 * (dy -
+dx);
+}
+}
+else
+{
+y += increment_y;
+if (p < 0)
+p += 2 * dx;
+else
+{
+x +=
+increment_x;
+p += 2 * (dx -
+dy);
+}
+}
+}
+}
+int main()
+{
+int gd = DETECT, gm;
+initgraph(&gd, &gm,
+NULL);
+int x1 = 500, y1 = 280,
+x2 = 320, y2 = 300;
+drawLineBresenham(x1,
+
+y1, x2, y2);
+getch();
+closegraph();
+return 0;
+}
+
+############## mid point circle ##################
+#include <stdio.h>
+#include <math.h>
+#include <graphics.h>
+
+void drawCircleMidPoint(int xc, int yc, int radius) {
+int x = radius, y = 0;
+int decisionParameter = 1 - radius;
+
+// Initialize graphics mode
+int gd = DETECT, gm;
+initgraph( & gd, & gm, (char * )
+"");
+
+// Display table header
+printf("Step\tX\tY\n");
+
+// Plot initial point and display in the table
+putpixel(xc + x, yc - y, WHITE);
+printf("%d\t%d\t%d\n", 0, xc + x, yc - y);
+
+// Draw the circle
+while (y <= x) {
+y++;
+
+if (decisionParameter <= 0) {
+decisionParameter += 2 * y + 1;
+} else {
+x--;
+decisionParameter += 2 * (y - x) + 1;
+}
+
+// Plot points and display in the table
+putpixel(xc + x, yc - y, WHITE);
+putpixel(xc - x, yc - y, WHITE);
+putpixel(xc + x, yc + y, WHITE);
+putpixel(xc - x, yc + y, WHITE);
+putpixel(xc + y, yc - x, WHITE);
+putpixel(xc - y, yc - x, WHITE);
+putpixel(xc + y, yc + x, WHITE);
+putpixel(xc - y, yc + x, WHITE);
+
+// Display current points in the table
+printf("%d\t%d\t%d\n", y, xc + x, yc - y);
+printf("%d\t%d\t%d\n", y, xc - x, yc - y);
+printf("%d\t%d\t%d\n", y, xc + x, yc + y);
+printf("%d\t%d\t%d\n", y, xc - x, yc + y);
+printf("%d\t%d\t%d\n", y, xc + y, yc - x);
+printf("%d\t%d\t%d\n", y, xc - y, yc - x);
+printf("%d\t%d\t%d\n", y, xc + y, yc + x);
+
+printf("%d\t%d\t%d\n", y, xc - y, yc + x);
+}
+
+// Wait for a key press before closing the graphics window
+getch();
+
+// Close graphics mode
+closegraph();
+}
+
+int main() {
+// Input circle parameters
+int xc, yc, radius;
+
+printf("Enter center coordinates (xc, yc): ");
+scanf("%d %d", & xc, & yc);
+printf("Enter radius: ");
+scanf("%d", & radius);
+
+// Display the table of points and draw the circle
+drawCircleMidPoint(xc, yc, radius);
+
+return 0;
+}
+
+
+
+###################### elipis ########################
+#include <stdio.h>
+#include <math.h>
+#include <graphics.h>
+void drawEllipseMidPoint(int xc, int yc, int rx, int ry) {
+int x = 0, y = ry;
+int rxSq = rx * rx;
+int rySq = ry * ry;
+int twoRxSq = 2 * rxSq;
+int twoRySq = 2 * rySq;
+int p, px, py;
+// Initialize graphics mode
+int gd = DETECT, gm;
+initgraph(&gd, &gm, "");
+// Display table header
+printf("Step\tX\tY\n");
+// Region 1
+p = round(rySq - (rxSq * ry) + (0.25 * rxSq));
+px = 0;
+py = twoRxSq * y;
+
+7
+
+while (px < py) {
+x++;
+px += twoRySq;
+if (p < 0) {
+p += rySq + px;
+} else {
+y--;
+py -= twoRxSq;
+p += rySq + px - py;
+}
+// Plot points and display in the table
+putpixel(xc + x, yc - y, WHITE);
+putpixel(xc - x, yc - y, WHITE);
+putpixel(xc + x, yc + y, WHITE);
+putpixel(xc - x, yc + y, WHITE);
+// Display current points in the table
+printf("%d\t%d\t%d\n", x, xc + x, yc - y);
+printf("%d\t%d\t%d\n", x, xc - x, yc - y);
+printf("%d\t%d\t%d\n", x, xc + x, yc + y);
+printf("%d\t%d\t%d\n", x, xc - x, yc + y);
+}
+// Region 2
+p = round(rySq * (x + 0.5) * (x + 0.5) + rxSq * (y - 1) * (y - 1) - rxSq * rySq);
+while (y > 0) {
+y--;
+py -= twoRxSq;
+if (p > 0) {
+p += rxSq - py;
+} else {
+x++;
+px += twoRySq;
+p += rxSq - py + px;
+}
+// Plot points and display in the table
+putpixel(xc + x, yc - y, WHITE);
+putpixel(xc - x, yc - y, WHITE);
+putpixel(xc + x, yc + y, WHITE);
+putpixel(xc - x, yc + y, WHITE);
+// Display current points in the table
+printf("%d\t%d\t%d\n", x, xc + x, yc - y);
+printf("%d\t%d\t%d\n", x, xc - x, yc - y);
+printf("%d\t%d\t%d\n", x, xc + x, yc + y);
+printf("%d\t%d\t%d\n", x, xc - x, yc + y);
+}
+// Wait for a key press before closing the graphics window
+
+8
+
+getch();
+// Close graphics mode
+closegraph();
+}
+int main() {
+// Input ellipse parameters
+int xc, yc, rx, ry;
+printf("Enter center coordinates (xc, yc): ");
+scanf("%d %d", &xc, &yc);
+printf("Enter semi-major axis (rx): ");
+scanf("%d", &rx);
+printf("Enter semi-minor axis (ry): ");
+scanf("%d", &ry);
+// Display the table of points and draw the ellipse
+drawEllipseMidPoint(xc, yc, rx, ry);
+return 0;
+}
