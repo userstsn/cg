@@ -1,5 +1,7 @@
 
-############## DDA #######################
+
+
+############## DDA #########################################
 #include <stdio.h>
 #include <graphics.h>
 void drawLineDDA(int x1, int y1, int x2, int y2)
@@ -28,7 +30,7 @@ closegraph();
 return 0;
 }
 
-############# BLA ##################
+############# BLA ########################################################
 #include <stdio.h>
 #include <graphics.h>
 void
@@ -100,7 +102,7 @@ return 0;
 
 
 
-############## mid point circle ##################
+############## mid point circle ################################33
 #include <stdio.h>
 #include <math.h>
 #include <graphics.h>
