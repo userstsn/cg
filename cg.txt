@@ -98,6 +98,8 @@ closegraph();
 return 0;
 }
 
+
+
 ############## mid point circle ##################
 #include <stdio.h>
 #include <math.h>
@@ -177,6 +179,8 @@ return 0;
 
 
 ###################### elipis ########################
+
+
 #include <stdio.h>
 #include <math.h>
 #include <graphics.h>
